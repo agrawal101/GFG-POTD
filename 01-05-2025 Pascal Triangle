@@ -1,0 +1,14 @@
+class Solution {
+    ArrayList<Integer> nthRowOfPascalTriangle(int n) {
+        // code here
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(1);
+        for(int i = 1;i<n;i++)
+        {
+            int temp = ans.get(ans.size()-1)*(n-i);
+            temp = temp/i;
+            ans.add(temp);
+        }
+        return ans;
+    }
+}
