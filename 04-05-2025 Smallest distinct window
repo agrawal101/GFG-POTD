@@ -1,0 +1,32 @@
+Problem Link- https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?_gl=1*1fkzu3h*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public int findSubString(String str) {
+        // code here
+        HashMap<Character,Integer> hm = new HashMap<>();
+        char crr[] = str.toCharArray();
+        for(char c:crr)
+        {
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        int cnt = hm.size();
+        hm = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        int ans = Integer.MAX_VALUE;
+        while(j<str.length())
+        {
+            hm.put(crr[j],hm.getOrDefault(crr[j],0)+1);
+            while(hm.size()>=cnt && i<=j)
+            {
+                ans = Math.min(ans,(j-i+1));
+                hm.put(crr[i],hm.get(crr[i])-1);
+                if(hm.get(crr[i])==0)
+                hm.remove(crr[i]);
+                i++;
+            }
+            j++;
+        }
+        return ans;
+    }
+}
