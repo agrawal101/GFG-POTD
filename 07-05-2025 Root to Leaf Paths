@@ -1,0 +1,26 @@
+Problem Link - https://www.geeksforgeeks.org/problems/root-to-leaf-paths/1?_gl=1*3cn59t*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        // code here
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> ls = new ArrayList<>();
+        rec(root,ans,ls);
+        return ans;
+    }
+    public static void rec(Node root,ArrayList<ArrayList<Integer>> ans,ArrayList<Integer> ls)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        ls.add(root.data);
+        if(root.left==null && root.right==null)
+            ans.add(new ArrayList<Integer>(ls));
+        else{
+            rec(root.left,ans,ls);
+            rec(root.right,ans,ls);
+        }
+        ls.remove(ls.size()-1);
+    }
+}
