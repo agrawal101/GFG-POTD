@@ -1,0 +1,41 @@
+Problem link - https://www.geeksforgeeks.org/problems/largest-number-in-k-swaps-1587115620/1?_gl=1*4c17wc*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    // Function to find the largest number after k swaps.
+    public String findMaximumNum(String s, int k) {
+        // code here.
+        char crr[] = s.toCharArray();
+        String ans[] = new String[]{s};
+        rec(crr,k,ans,0);
+        return ans[0];
+    }
+    public void rec(char crr[],int k,String ans[],int strt)
+    {
+        if(k==0 || strt==crr.length)
+        return;
+        char maxc = crr[strt];
+        for(int i = strt+1;i<crr.length;i++)
+        {
+            if(maxc<crr[i])
+                maxc = crr[i];
+        }
+        for(int i = strt+1;i<crr.length;i++)
+        {
+            if(crr[i] == maxc)
+            {
+                char temp = crr[i];
+                crr[i] = crr[strt];
+                crr[strt] = temp;
+                if(ans[0].compareTo(String.valueOf(crr))<0)
+                ans[0] = String.valueOf(crr);
+                
+                rec(crr,k-1,ans,strt+1);
+                
+                temp = crr[i];
+                crr[i] = crr[strt];
+                crr[strt] = temp;
+            }
+        }
+        rec(crr,k,ans,strt+1);
+    }
+}
