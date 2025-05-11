@@ -1,0 +1,25 @@
+Problem Link - https://www.geeksforgeeks.org/problems/k-th-largest-sum-contiguous-subarray/1?_gl=1*1tmfaoh*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+Class Solution {
+    public static int kthLargest(int[] arr, int k) {
+        // code here
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int n = arr.length;
+        for(int i = 0;i<n;i++)
+        {
+            int sum = 0;
+            for(int j = i;j<n;j++)
+            {
+                sum+=arr[j];
+                if (pq.size() < k) {
+                    pq.add(sum);
+                }
+                else if (sum > pq.peek()) {
+                    pq.poll();
+                    pq.add(sum);
+                }
+            }
+        }
+        return pq.poll();
+    }
+}
