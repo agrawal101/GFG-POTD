@@ -1,0 +1,45 @@
+Problem link - https://www.geeksforgeeks.org/problems/meeting-rooms-iii/1?_gl=1*8ot586*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public int mostBooked(int n, int[][] meetings) {
+        // code here
+        int room[] = new int[n];
+        Arrays.fill(room,0);
+        Arrays.sort(meetings,(a, b) -> Integer.compare(a[0], b[0]));
+        PriorityQueue<int[]> usedRooms = new PriorityQueue<>((a, b) -> a[0] == b[0] ? Integer.compare(a[1], b[1]) : Integer.compare(a[0], b[0])); // [endTime, roomId]
+        PriorityQueue<Integer> availableRooms = new PriorityQueue<>();
+        for(int i = 0;i<n;i++)
+        availableRooms.add(i);
+        for(int j = 0;j<meetings.length;j++)
+        {
+            int duration = meetings[j][1]-meetings[j][0];
+            while(!usedRooms.isEmpty() && usedRooms.peek()[0]<=meetings[j][0])
+            {
+                availableRooms.add(usedRooms.peek()[1]);
+                usedRooms.poll();
+            }
+            if(!availableRooms.isEmpty())
+            {
+                int r = availableRooms.poll();
+                usedRooms.add(new int[]{meetings[j][1],r});
+                room[r]++;
+            }
+            else
+            {
+                int temp[] = usedRooms.poll();
+                usedRooms.add(new int[]{temp[0]+duration,temp[1]});
+                room[temp[1]]++;
+            }
+        }
+        int ans = 0;
+        int max = 0;
+        for(int i = 0;i<n;i++)
+        {
+            if(room[i]>max){
+                ans = i;
+                max = room[i];
+            }
+        }
+        return ans;
+    }
+}
