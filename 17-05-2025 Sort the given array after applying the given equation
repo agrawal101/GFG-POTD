@@ -1,0 +1,48 @@
+Problem Link - https://www.geeksforgeeks.org/problems/sort-the-given-array-after-applying-the-given-equation0304/1?_gl=1*4ljld3*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+Class Solution {
+    public ArrayList<Integer> sortArray(int[] arr, int A, int B, int C) {
+        // Code here
+        ArrayList<Integer> ans = new ArrayList<>();
+        java.util.function.Function<Integer,Integer> f = x -> A*x*x + B*x + C;
+        int l = 0,r = arr.length-1;
+        if(A>=0)
+        {
+            while(l<=r)
+            {
+                int lval = f.apply(arr[l]);
+                int rval = f.apply(arr[r]);
+                if(lval>rval)
+                {
+                    ans.add(lval);
+                    l++;
+                }
+                else
+                {
+                    ans.add(rval);
+                    r--;
+                }
+            }
+            Collections.reverse(ans);
+        }
+        else
+        {
+            while(l<=r)
+            {
+                int lval = f.apply(arr[l]);
+                int rval = f.apply(arr[r]);
+                if(lval<rval)
+                {
+                    ans.add(lval);
+                    l++;
+                }
+                else
+                {
+                    ans.add(rval);
+                    r--;
+                }
+            }
+        }
+        return ans;
+    }
+}
