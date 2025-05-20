@@ -1,0 +1,64 @@
+Problem link - https://www.geeksforgeeks.org/problems/burning-tree/1?_gl=1*jkmas5*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public static int minTime(Node root, int target) {
+        if(root==null)
+        return 0;
+        HashMap<Integer,Node> par = new HashMap<>();
+        par.put(root.data,null);
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        Node strt = null;
+        while(!q.isEmpty())
+        {
+            Node temp = q.poll();
+            if(temp.data==target)
+            strt = temp;
+            if(temp.left!=null)
+            {
+                par.put(temp.left.data,temp);
+                q.add(temp.left);
+            }
+            if(temp.right!=null)
+            {
+                par.put(temp.right.data,temp);
+                q.add(temp.right);
+            }
+        }
+        int ans = 0;
+        q = new LinkedList<>();
+        HashSet<Integer> vis = new HashSet<>();
+        q.add(strt);
+        vis.add(target);
+        while(!q.isEmpty())
+        {
+            int sz = q.size();
+            boolean flag = false;
+            for(int i = 0;i<sz;i++){
+                Node temp = q.poll();
+                Node pr = par.get(temp.data);
+                if(pr!=null && vis.contains(pr.data)==false)
+                {
+                    vis.add(pr.data);
+                    q.add(pr);
+                    flag = true;
+                }
+                if(temp.left!=null && vis.contains(temp.left.data)==false)
+                {
+                    vis.add(temp.left.data);
+                    q.add(temp.left);
+                    flag = true;
+                }
+                if(temp.right!=null && vis.contains(temp.right.data)==false)
+                {
+                    vis.add(temp.right.data);
+                    q.add(temp.right);
+                    flag = true;
+                }
+            }
+            if(flag)
+            ans++;
+        }
+        return ans;
+    }
+}
