@@ -1,0 +1,28 @@
+Problem link - https://www.geeksforgeeks.org/problems/kth-smallest-number-in-multiplication-table/1?_gl=1*599wx7*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+
+class Solution {
+    public int kthSmallest(int m, int n, int k) {
+        // code here
+        int h = (m*n);
+        int l = 1;
+        while(l<h)
+        {
+            int mid = (l+h)/2;
+            if(cnt(mid,m,n)<k)
+            l = mid+1;
+            else
+            h = mid;
+        }
+        return l;
+    }
+    public int cnt(int x,int m,int n)
+    {
+        int sum = 0;
+        for(int i = 1;i<=m;i++)
+        {
+            sum+=Math.min((x/i),n);
+        }
+        return sum;
+    }
+}
