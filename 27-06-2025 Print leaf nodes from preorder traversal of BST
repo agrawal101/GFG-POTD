@@ -1,0 +1,31 @@
+Problem link - https://www.geeksforgeeks.org/problems/print-leaf-nodes-from-preorder-traversal-of-bst2657/1?_gl=1*1auanv3*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public ArrayList<Integer> leafNodes(int[] preorder) {
+        // code here
+        Stack<Integer> st = new Stack<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        st.push(preorder[0]);
+        for(int i = 1;i<preorder.length;i++)
+        {
+            if(st.peek()>preorder[i])
+            st.push(preorder[i]);
+            else
+            {
+                int temp = st.peek();
+                int cnt = 0;
+                while(!st.isEmpty() && st.peek()<preorder[i])
+                {
+                    st.pop();
+                    cnt++;
+                }
+                st.push(preorder[i]);
+                if(cnt>1)
+                ans.add(temp);
+            }
+        }
+        if(!st.isEmpty())
+        ans.add(st.pop());
+        return ans;
+    }
+}
