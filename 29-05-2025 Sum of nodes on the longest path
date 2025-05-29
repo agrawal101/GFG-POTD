@@ -1,0 +1,31 @@
+Problem link - https://www.geeksforgeeks.org/problems/sum-of-the-longest-bloodline-of-a-tree/1?_gl=1*1nn1892*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public int sumOfLongRootToLeafPath(Node root) {
+        // code here
+        int ans[] = new int[1];
+        ans[0] = root.data;
+        int len[] = new int[1];
+        len[0] = 0;
+        rec(root,ans,len,0,0);
+        return ans[0];
+    }
+    public void rec(Node node,int ans[],int len[],int s,int l)
+    {
+        if(node==null)
+        {
+            if(l>len[0])
+            {
+                len[0] = l;
+                ans[0] = s;
+            }
+            else if(l==len[0])
+            {
+                ans[0] = Math.max(ans[0],s);
+            }
+            return;
+        }
+        rec(node.left,ans,len,s+node.data,l+1);
+        rec(node.right,ans,len,s+node.data,l+1);
+    }
+}
