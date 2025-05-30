@@ -1,0 +1,20 @@
+Problem link - https://www.geeksforgeeks.org/problems/closest-neighbor-in-bst/1?_gl=1*1k0ee9e*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public int findMaxFork(Node root, int k) {
+        // code here.
+        Node temp = root;
+        int ans = -1;
+        while(temp!=null)
+        {
+            if(temp.data>k)
+            temp = temp.left;
+            else
+            {
+                ans = temp.data;
+                temp = temp.right;
+            }
+        }
+        return ans;
+    }
+}
