@@ -1,0 +1,34 @@
+Problem link - https://www.geeksforgeeks.org/problems/count-number-of-substrings4528/1?_gl=1*qoshml*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    int countSubstr(String s, int k) {
+        // your code here
+        int i = 0,j = 0;
+        i = calc(s,k);
+        if(k>1)
+            j = calc(s,k-1);
+        return i-j;
+    }
+    int calc(String s,int k){   
+        HashMap<Character,Integer> hm = new HashMap<>();
+        int ans = 0;
+        int i = 0;
+        int j = 0;
+        while(j<s.length())
+        {
+            char c = s.charAt(j);
+            hm.put(c,hm.getOrDefault(c,0)+1);
+            while(hm.size()>k)
+            {
+                char x = s.charAt(i);
+                hm.put(x,hm.get(x)-1);
+                if(hm.get(x)==0)
+                hm.remove(x);
+                i++;
+            }
+            ans+=(j-i+1);
+            j++;
+        }
+        return ans;
+    }
+}
