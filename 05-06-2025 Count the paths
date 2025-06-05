@@ -1,0 +1,32 @@
+Problem link - https://www.geeksforgeeks.org/problems/count-the-paths4332/1
+
+class Solution {
+    public int countPaths(int[][] edges, int V, int src, int dest) {
+        // Code here
+         int dp[] = new int[V];
+         Arrays.fill(dp,-1);
+         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+         for(int i = 0;i<V;i++)
+         {
+             adj.add(new ArrayList<>());
+         }
+         for(int ar[]:edges)
+         {
+             adj.get(ar[0]).add(ar[1]);
+         }
+        return dfs(adj,dp,src,dest);
+    }
+    public int dfs(ArrayList<ArrayList<Integer>> adj,int dp[],int i,int dest)
+    {
+        if(i==dest)
+        return 1;
+        if(dp[i]!=-1)
+        return dp[i];
+        int total = 0;
+        for(int x:adj.get(i))
+        {
+            total+=dfs(adj,dp,x,dest);
+        }
+        return dp[i] = total;
+    }
+}
