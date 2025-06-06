@@ -1,0 +1,33 @@
+Problem link - https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm--141631/1?_gl=1*ipfj7y*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    ArrayList<Integer> search(String pat, String txt) {
+    int l = pat.length();
+    int n = txt.length();
+    int base = 26;
+    long mod = (long)1e9 + 7;
+    ArrayList<Integer> ans = new ArrayList<>();
+    if (l > n) return ans;
+    long pHash = 0, tHash = 0;
+    long power = 1;
+    for (int i = 0; i < l - 1; i++) {
+        power = (power * base) % mod;
+    }
+    for (int i = 0; i < l; i++) {
+        pHash = (pHash * base + (pat.charAt(i) - 'a')) % mod;
+        tHash = (tHash * base + (txt.charAt(i) - 'a')) % mod;
+    }
+    if (pHash == tHash && txt.substring(0, l).equals(pat)) {
+        ans.add(1);
+    }
+    for (int i = l; i < n; i++) {
+        tHash = (tHash - (txt.charAt(i - l) - 'a') * power % mod + mod) % mod;
+        tHash = (tHash * base + (txt.charAt(i) - 'a')) % mod;
+
+        if (tHash == pHash && txt.substring(i - l + 1, i + 1).equals(pat)) {
+            ans.add(i - l + 2);
+        }
+    }
+    return ans;
+    }
+}
