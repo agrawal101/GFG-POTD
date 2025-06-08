@@ -1,0 +1,74 @@
+Problem link - https://www.geeksforgeeks.org/problems/sum-string3151/1?_gl=1*v5l6kw*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public boolean isSumString(String s) {
+        // code here
+        int n = s.length();
+        for(int l1 = 1;l1<n;l1++)
+        {
+            for(int l2 = 1;l2+l1<n;l2++)
+            {
+                if(check(s,0,l1,l2))
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean check(String s,int start,int len1,int len2)
+    {
+        String part1 = s.substring(start, start + len1);
+        String part2 = s.substring(start + len1, start + len1 + len2);
+        String expectedSum = add(part1, part2);
+
+        int sumLen = expectedSum.length();
+
+        if (start + len1 + len2 + sumLen > s.length()) {
+            return false;
+        }
+
+        if (expectedSum.equals(s.substring(start +len1 + len2, start +len1 + len2 + sumLen))) {
+            
+            if (start + len1 + len2 + sumLen == s.length()) {
+                return true;
+            }
+
+            return check(s, start + len1, len2, sumLen);
+        }
+
+        return false;
+    }
+    public String add(String num1,String num2)
+    {
+        if (num1.length() < num2.length()) {
+            String temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int len1 = num1.length();
+        int len2 = num2.length();
+        String sum = "";
+        int carry = 0;
+
+        for (int i = 0; i < len2; i++) {
+            int d1 = num1.charAt(len1 - 1 - i) - '0';
+            int d2 = num2.charAt(len2 - 1 - i) - '0';
+            int digit = (d1 + d2 + carry) % 10;
+            carry = (d1 + d2 + carry) / 10;
+            sum = (char)(digit + '0') + sum;
+        }
+
+        for (int i = len2; i < len1; i++) {
+            int d = num1.charAt(len1 - 1 - i) - '0';
+            int digit = (d + carry) % 10;
+            carry = (d + carry) / 10;
+            sum = (char)(digit + '0') + sum;
+        }
+
+        if (carry > 0) {
+            sum = (char)(carry + '0') + sum;
+        }
+
+        return sum;
+    }
+}
