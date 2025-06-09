@@ -1,0 +1,19 @@
+Problem link- https://www.geeksforgeeks.org/problems/check-whether-bst-contains-dead-end/1?_gl=1*j7sqpl*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public boolean isDeadEnd(Node root) {
+        // Code here.
+        return rec(root,1,Integer.MAX_VALUE);
+    }
+    public boolean rec(Node root,int min,int max)
+    {
+        if(root==null)
+        return false;
+        if(root.right==null && root.left==null)
+        {
+            if(max==min)
+            return true;
+        }
+        return rec(root.left,min,root.data-1) || rec(root.right,root.data+1,max);
+    }
+}
