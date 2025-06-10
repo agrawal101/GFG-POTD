@@ -1,0 +1,25 @@
+Problem link - https://www.geeksforgeeks.org/problems/exactly-one-swap--170637/1?_gl=1*1my1582*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    int countStrings(String s) {
+        // code here
+        int n = s.length();
+        int arr[] = new int[26];
+        int cnt = 0;
+        for(char c:s.toCharArray())
+        {
+            arr[c-'a']++;
+        }
+        cnt = (n*(n-1))/2;
+        boolean flag = false;
+        for(int x:arr)
+        {
+            if(x>1)
+            {
+                flag = true;
+                cnt-= ((x)*(x-1))/2;
+            }
+        }
+        return flag?cnt+1:cnt;
+    }
+}
