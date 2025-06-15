@@ -1,0 +1,16 @@
+Probelm link - https://www.geeksforgeeks.org/problems/symmetric-tree/1?_gl=1*15k7psa*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+class Solution {
+    public boolean isSymmetric(Node root) {
+        // Code here
+        if(root==null)
+        return true;
+        return rec(root.left,root.right);
+    }
+    public boolean rec(Node left,Node right)
+    {
+        if(left==null || right==null)
+            return left==right;
+        return (left.data==right.data) && rec(left.right,right.left) && rec(left.left,right.right);
+    }
+}
