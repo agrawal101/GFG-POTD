@@ -1,0 +1,44 @@
+Problem link - https://www.geeksforgeeks.org/problems/equalize-the-towers2804/1?_gl=1*tyioj8*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+   --------Ternary search-----
+
+class Solution {
+    public int minCost(int[] heights, int[] cost) {
+        // code here
+        int max = 0;
+        int min = heights[0];
+        int ans = Integer.MAX_VALUE;
+        for(int x:heights)
+        {
+            max = Math.max(max,x);
+            min = Math.min(min,x);
+        }
+        while(min<=max)
+        {
+            int mid1 = min+(max-min)/3;
+            int mid2 = max+(min-max)/3;
+            int cost1 = count(heights,cost,mid1);
+            int cost2 = count(heights,cost,mid2);
+            ans = Math.min(ans,Math.min(cost1,cost2));
+            if(cost1<cost2)
+            {
+                max = mid2-1;
+            }
+            else
+            {
+                min = mid1+1;
+            }
+        }
+        return ans;
+    }
+    public int count(int heights[],int cost[],int mid)
+    {
+        int ans = 0;
+        for(int i = 0;i<cost.length;i++)
+        {
+            int x = Math.abs(heights[i]-mid);
+            ans+=x*cost[i];
+        }
+        return ans;
+    }
+}
