@@ -1,0 +1,42 @@
+Problem link - https://www.geeksforgeeks.org/problems/coin-piles5152/1?_gl=1*1kjcne1*_up*MQ..&gclid=Cj0KCQjwh_i_BhCzARIsANimeoEIpPMx-bYqTx5XofjLvqo6p17z0hEUHvkOxyfrbAJjglEDwaA0fOsaAsmREALw_wcB
+
+
+class Solution {
+    public int minimumCoins(int[] arr, int k) {
+        // code here
+        int n = arr.length;
+        Arrays.sort(arr);
+        int pre[] = new int[n];
+        Arrays.fill(pre,0);
+        pre[0] = arr[0];
+        for(int i = 1;i<n;i++)
+        {
+            pre[i] = pre[i-1]+arr[i];
+        }
+        int min = Integer.MAX_VALUE;
+        for(int i = 0;i<n;i++)
+        {
+            int val = arr[i]+k;
+            int ub = upper_bound(arr,val,i,n);
+            int total = ub>0?pre[n-1]-pre[ub-1]:pre[n-1];
+            int expected = val*(n-ub);
+            int left = i>0?pre[i-1]:0;
+            min = Math.min(min,(total-expected+left));
+        }
+        return min;
+    }
+    public int upper_bound(int []arr,int x,int i,int j)
+    {
+        while(i<j)
+        {
+            int mid = (i+j)/2;
+            if(arr[mid]<=x)
+            {
+               i = mid+1;
+            }
+            else
+            j = mid;
+        }
+        return i;
+    }
+}
